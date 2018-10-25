@@ -3,6 +3,7 @@
 PACKAGES='https://raw.githubusercontent.com/M1kuTheAwesome/ArchAutoInstall/master/packages.list'
 AURLIST='https://raw.githubusercontent.com/M1kuTheAwesome/ArchAutoInstall/master/aur.list'
 
+sudo dhcpcd
 # Ask if laptop, install power management tools if yes
 
 while true

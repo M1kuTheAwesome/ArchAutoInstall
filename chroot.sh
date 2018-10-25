@@ -50,7 +50,7 @@ sed -i -e 's/gzip/pigz/' /etc/makepkg.conf
 sed -i -e 's/(xz -c -z -)/(xz -c -z - --threads=0)/' /etc/makepkg.conf
 
 # add user and make it sudo
-useradd -m -g wheel -G storage,power -s /usr/bin/zsh $5
+useradd -m -g wheel -G storage,power -s /usr/bin/bash $5
 echo "$5:$6" | chpasswd
 echo "$5 ALL=(ALL:ALL) ALL" | EDITOR="tee -a" visudo
 
