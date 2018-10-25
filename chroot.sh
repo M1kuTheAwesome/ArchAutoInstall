@@ -1,6 +1,5 @@
 #!/bin/bash
 
-PACKAGES='https://raw.githubusercontent.com/M1kuTheAwesome/ArchAutoInstall/master/packages.list'
 echo "KEYMAP=$1" > /etc/vconsole.conf
 
 # setting timezone and time
@@ -42,24 +41,6 @@ fi
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "root:$4" | chpasswd
-
-#install a working ttf now for complicated reasons
-pacman -S --noconfirm ttf-liberation
-
-# installing packages from packages.list
-curl -sO $PACKAGES
-pacman -S --noconfirm $(cat packages.list)
-rm packages.list
-
-#installing VGA drivers
-if [[ $7 ]]
-then
-	pacman -S --noconfirm $7
-fi
-
-# enable lxdm and NetworkManager systemd
-systemctl enable lxdm
-systemctl enable NetworkManager
 
 # optimize building packages
 sed -i -e 's/x86-64/native/' /etc/makepkg.conf

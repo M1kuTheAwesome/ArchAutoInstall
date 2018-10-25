@@ -11,22 +11,6 @@ read -p 'hostname: ' HOSTNAME
 TIMEZONE=Europe/Tallinn
 read -p 'Swap size(in MiB): ' SWAP
 
-echo 'Select correct graphics driver.'
-select VGA in 'xf86-video-intel' 'xf86-video-amdgpu' 'xf86-video-ati' \
-'xf86-video-nouveau' 'nvidia' 'nvidia-390xx' 'nvidia-340xx' 'none'
-do
-	case $VGA in
-		'none')
-		echo "$VGA selected"
-		VGA=''
-		;;
-		*)
-		echo "$VGA selected"
-		;;
-	esac
-	break
-done
-
 timedatectl set-ntp true
 
 #Calculate block size based on sector size 
@@ -85,10 +69,12 @@ curl -sO $CHROOT
 cp chroot.sh /mnt/chroot.sh
 
 cat << EOF | arch-chroot /mnt
-	bash chroot.sh $KEYMAP $TIMEZONE $HOSTNAME $ROOTPW $USER $USERPW $VGA
+	bash chroot.sh $KEYMAP $TIMEZONE $HOSTNAME $ROOTPW $USER $USERPW
 EOF
 
 rm /mnt/chroot.sh
+curl -O 'https://raw.githubusercontent.com/M1kuTheAwesome/ArchAutoInstall/master/postinstall.sh'
+mv postinstall.sh /mnt/home/mihkel/postinstall.sh
 # all done ,unmount and reboot
 umount -R /mnt/boot
 umount -R /mnt
