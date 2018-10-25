@@ -74,7 +74,7 @@ EOF
 
 rm /mnt/chroot.sh
 curl -O 'https://raw.githubusercontent.com/M1kuTheAwesome/ArchAutoInstall/master/postinstall.sh'
-mv postinstall.sh /mnt/home/mihkel/postinstall.sh
+mv postinstall.sh /mnt/home/$USER/postinstall.sh
 # all done ,unmount and reboot
 umount -R /mnt/boot
 umount -R /mnt
