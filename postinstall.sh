@@ -2,6 +2,9 @@
 
 PACKAGES='https://raw.githubusercontent.com/M1kuTheAwesome/ArchAutoInstall/master/packages.list'
 AURLIST='https://raw.githubusercontent.com/M1kuTheAwesome/ArchAutoInstall/master/aur.list'
+HOOK='https://raw.githubusercontent.com/M1kuTheAwesome/ArchAutoInstall/master/mirrorupgrade.hook'
+SERVICE='https://raw.githubusercontent.com/M1kuTheAwesome/ArchAutoInstall/master/reflector.service'
+TIMER='https://raw.githubusercontent.com/M1kuTheAwesome/ArchAutoInstall/master/reflector.timer'
 
 sudo dhcpcd
 # Ask if laptop, install power management tools if yes
@@ -54,6 +57,14 @@ sudo ufw enable
 # enable lxdm and NetworkManager systemd
 sudo systemctl enable lxdm
 sudo systemctl enable NetworkManager
+
+# Copy pacman hook and systemd stuff for reflector
+
+sudo curl -o /etc/pacman.d/hooks/mirrorupgrade.hook $HOOK
+sudo curl -o /etc/systemd/system/reflector.service $SERVICE
+sudo curl -o /etc/systemd/system/reflector.timer $TIMER
+sudo systemctl enable reflector.timer
+
 
 # install yay
 curl -sO 'https://aur.archlinux.org/cgit/aur.git/snapshot/yay-bin.tar.gz'
