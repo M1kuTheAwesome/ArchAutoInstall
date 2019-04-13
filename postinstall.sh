@@ -60,6 +60,7 @@ sudo systemctl enable NetworkManager
 
 # Copy pacman hook and systemd stuff for reflector
 
+sudo mkdir /etc/pacman.d/hooks
 sudo curl -o /etc/pacman.d/hooks/mirrorupgrade.hook $HOOK
 sudo curl -o /etc/systemd/system/reflector.service $SERVICE
 sudo curl -o /etc/systemd/system/reflector.timer $TIMER
@@ -77,7 +78,7 @@ yay -S --noconfirm $(cat aur.list)
 
 # enable stuff for some installed packages
 sudo systemctl enable pcscd
-sudo usermod -aG kalu mihkel
+sudo usermod -aG mihkel
 
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
