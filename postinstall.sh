@@ -78,7 +78,7 @@ yay -S --noconfirm $(cat aur.list)
 
 # enable stuff for some installed packages
 sudo systemctl enable pcscd
-sudo usermod -aG mihkel
 
+# Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
