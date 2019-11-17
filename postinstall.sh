@@ -7,31 +7,14 @@ SERVICE='https://raw.githubusercontent.com/M1kuTheAwesome/ArchAutoInstall/master
 TIMER='https://raw.githubusercontent.com/M1kuTheAwesome/ArchAutoInstall/master/reflector.timer'
 
 sudo dhcpcd
-# Ask if laptop, install power management tools if yes
-
-while true
-do
-    read -p'Is this a laptop? ' LAPTOP
-    case $LAPTOP in
-        [Yy]* ) sudo pacman -S --noconfirm xfce4-power-manager; break;;
-        [Nn]* ) break;;
-        * ) echo "Yes or no only, please.";;
-    esac
-done
 
 echo 'Select correct graphics driver.'
-select VGA in 'xf86-video-intel' 'xf86-video-amdgpu' 'xf86-video-ati' \
-'xf86-video-nouveau' 'nvidia' 'nvidia-390xx' 'nvidia-340xx' 'none'
+echo 'See https://wiki.archlinux.org/index.php/Hardware_video_acceleration for help'
+select VGA in 'xf86-video-intel intel-media-driver' 'xf86-video-intel libva-intel-driver' \
+'xf86-video-amdgpu libva-mesa-driver' 'xf86-video-ati libva-mesa-driver' \
+'nvidia nvidia-utils' 'none'
 do
-	case $VGA in
-		'none')
-		echo "$VGA selected"
-		VGA=''
-		;;
-		*)
-		echo "$VGA selected"
-		;;
-	esac
+	echo "$VGA selected"
 	break
 done
 
@@ -71,10 +54,12 @@ sudo systemctl enable reflector.timer
 curl -sO 'https://aur.archlinux.org/cgit/aur.git/snapshot/yay-bin.tar.gz'
 tar -xvf yay-bin.tar.gz && cd yay-bin
 makepkg --noconfirm -si
+cd .. && rm -r yay-bin && rm yay-bin.tar.gz
 
 # install AUR packages
 curl -sO $AURLIST
 yay -S --noconfirm $(cat aur.list)
+rm aur.list
 
 # enable stuff for some installed packages
 sudo systemctl enable pcscd

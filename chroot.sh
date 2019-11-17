@@ -9,6 +9,7 @@ sed -i '/en_US.UTF_8/s/^#//g' /etc/locale.gen
 locale-gen
 echo 'LANG=en_US.UTF-8' > /etc/locale.conf
 
+#Configure hostname
 echo $3 > /etc/hostname
 (
 echo "127.0.0.1	localhost"
@@ -17,7 +18,6 @@ echo "127.0.1.1	$3.localdomain	$3"
 )>/etc/hosts
 
 # Install correct microcode updates
-
 if grep 'GenuineIntel' /proc/cpuinfo
 then
 	pacman -S --noconfirm intel-ucode
